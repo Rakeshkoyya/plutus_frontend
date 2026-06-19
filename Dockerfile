@@ -14,8 +14,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # NEXT_PUBLIC_* values are inlined into the client bundle at BUILD time, so the
-# backend URL must be passed as a build arg (not just a runtime env var).
-ARG NEXT_PUBLIC_API_URL
+# backend URL must be available during `npm run build` (not just at runtime).
+# The default points at production; override with --build-arg for other envs.
+ARG NEXT_PUBLIC_API_URL=https://plutus-api.trackbit.in
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 # `mkdir public` keeps the COPY below valid even though this project has no public/ yet.
