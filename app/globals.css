@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 16% 96%;
+    --foreground: 222 32% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 32% 13%;
+
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 158 56% 93%;
+    --accent-foreground: 162 72% 28%;
+
+    --border: 220 13% 89%;
+    --input: 220 13% 87%;
+    --ring: 162 72% 40%;
+
+    --primary: 162 72% 33%;
+    --primary-hover: 162 72% 27%;
+    --primary-foreground: 0 0% 100%;
+
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 222 32% 13%;
+  }
+
+  .dark {
+    --background: 222 18% 11%;
+    --foreground: 210 24% 97%;
+
+    --card: 222 16% 15%;
+    --card-foreground: 210 24% 97%;
+
+    --muted: 222 14% 20%;
+    --muted-foreground: 215 16% 68%;
+
+    --accent: 162 30% 22%;
+    --accent-foreground: 156 66% 76%;
+
+    --border: 222 13% 25%;
+    --input: 222 13% 28%;
+    --ring: 158 64% 48%;
+
+    --primary: 158 62% 47%;
+    --primary-hover: 158 64% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --sidebar: 222 18% 13%;
+    --sidebar-foreground: 210 24% 97%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* thin scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 9999px;
+}
+
+/* native date/select icons readable in dark */
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
