@@ -13,8 +13,51 @@ import { Button, Card, Label, Select, Spinner } from "@/components/ui/primitives
 import { useToast } from "@/components/ui/toast";
 
 const ENTITY_FIELDS: Record<string, string[]> = {
-  students_fees: ["name", "roll_number", "class_name", "section", "total_fee", "discount", "paid_amount"],
+  students_fees: [
+    // identity + contacts
+    "name", "admission_number", "roll_number", "class_name", "section", "category",
+    "father_name", "father_phone", "mother_name", "mother_phone", "phone",
+    // fees
+    "total_fee", "fee_after_discount", "discount", "opening_dues",
+    // per-quarter installment amounts (the schedule, e.g. "1st QTR Due")
+    "q1_amount", "q2_amount", "q3_amount", "q4_amount",
+    // collections: a single paid amount, the outstanding balance, or per-quarter paid
+    "total_due", "paid_amount", "q1_paid", "q2_paid", "q3_paid", "q4_paid",
+    "receipt_number",
+  ],
   fee_structures: ["class_name", "academic_year", "total_amount", "num_installments"],
+};
+// Friendly labels for the mapping dropdowns; falls back to the field name otherwise.
+const FIELD_LABELS: Record<string, string> = {
+  name: "Student name",
+  admission_number: "Admission / SR no.",
+  roll_number: "Roll no.",
+  class_name: "Class",
+  section: "Section",
+  category: "Category",
+  phone: "Contact phone",
+  total_fee: "Total fee",
+  discount: "Discount",
+  father_name: "Father's name",
+  father_phone: "Father's phone",
+  mother_name: "Mother's name",
+  mother_phone: "Mother's phone",
+  fee_after_discount: "Fee after discount",
+  opening_dues: "Opening dues (last yr)",
+  q1_amount: "1st Qtr — amount",
+  q2_amount: "2nd Qtr — amount",
+  q3_amount: "3rd Qtr — amount",
+  q4_amount: "4th Qtr — amount",
+  total_due: "Total due (balance)",
+  paid_amount: "Total paid",
+  q1_paid: "1st Qtr — paid",
+  q2_paid: "2nd Qtr — paid",
+  q3_paid: "3rd Qtr — paid",
+  q4_paid: "4th Qtr — paid",
+  receipt_number: "Receipt no.",
+  total_amount: "Total amount",
+  num_installments: "No. of installments",
+  academic_year: "Academic year",
 };
 const ENTITY_LABELS: Record<string, string> = {
   students_fees: "Students + Fees",
@@ -348,8 +391,8 @@ function SheetCard({
         <div className="grid grid-cols-1 gap-3 p-5 sm:grid-cols-2">
           {fields.map((field) => (
             <div key={field} className="flex items-center justify-between gap-3">
-              <span className="text-sm font-medium capitalize text-muted-foreground">
-                {field.replace("_", " ")}
+              <span className="text-sm font-medium text-muted-foreground">
+                {FIELD_LABELS[field] ?? field.replace(/_/g, " ")}
                 {field === "name" && state.entity === "students_fees" && (
                   <span className="text-rose-500"> *</span>
                 )}
